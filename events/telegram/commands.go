@@ -4,6 +4,8 @@ import (
 	"log"
 	"net/url"
 	"strings"
+
+	"github.com/sunriseex/tgbot-notifier/lib/e"
 )
 
 const (
