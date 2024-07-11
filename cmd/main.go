@@ -2,13 +2,13 @@ package main
 
 import (
 	"flag"
+	"github.com/sunriseex/tgbot-notifier/storage/files"
 	"log"
 
 	tgClient "github.com/sunriseex/tgbot-notifier/clients/telegram"
 	event_consumer "github.com/sunriseex/tgbot-notifier/consumer/event-consumer"
 
 	telegram "github.com/sunriseex/tgbot-notifier/events/telegram"
-	"github.com/sunriseex/tgbot-notifier/lib/storage/files"
 )
 
 const (

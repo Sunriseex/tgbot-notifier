@@ -2,11 +2,11 @@ package telegram
 
 import (
 	"errors"
+	"github.com/sunriseex/tgbot-notifier/storage"
 
 	"github.com/sunriseex/tgbot-notifier/events"
 	"github.com/sunriseex/tgbot-notifier/events/telegram"
-	e "github.com/sunriseex/tgbot-notifier/lib/errors/err"
-	"github.com/sunriseex/tgbot-notifier/lib/storage"
+	"github.com/sunriseex/tgbot-notifier/lib/errors/e"
 )
 
 type Processor struct {

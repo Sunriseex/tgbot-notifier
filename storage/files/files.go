@@ -4,13 +4,13 @@ import (
 	"encoding/gob"
 	"errors"
 	"fmt"
+	"github.com/sunriseex/tgbot-notifier/storage"
 	"math/rand"
 	"os"
 	"path/filepath"
 	"time"
 
-	e "github.com/sunriseex/tgbot-notifier/lib/errors/err"
-	"github.com/sunriseex/tgbot-notifier/lib/storage"
+	e "github.com/sunriseex/tgbot-notifier/lib/e"
 )
 
 type Storage struct {

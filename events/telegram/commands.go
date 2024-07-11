@@ -2,12 +2,12 @@ package telegram
 
 import (
 	"errors"
+	"github.com/sunriseex/tgbot-notifier/storage"
 	"log"
 	"net/url"
 	"strings"
 
-	e "github.com/sunriseex/tgbot-notifier/lib/errors/err"
-	"github.com/sunriseex/tgbot-notifier/lib/storage"
+	"github.com/sunriseex/tgbot-notifier/lib/errors/e"
 )
 
 const (

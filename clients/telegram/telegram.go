@@ -8,7 +8,7 @@ import (
 	"path"
 	"strconv"
 
-	e "github.com/sunriseex/tgbot-notifier/lib/errors/err"
+	"github.com/sunriseex/tgbot-notifier/lib/errors/e"
 )
 
 type Client struct {
