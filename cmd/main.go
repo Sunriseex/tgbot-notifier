@@ -7,7 +7,7 @@ import (
 	tgClient "github.com/sunriseex/tgbot-notifier/clients/telegram"
 	event_consumer "github.com/sunriseex/tgbot-notifier/consumer/event-consumer"
 
-	"github.com/sunriseex/tgbot-notifier/events/telegram"
+	telegram "github.com/sunriseex/tgbot-notifier/events/telegram"
 	"github.com/sunriseex/tgbot-notifier/lib/storage/files"
 )
 
@@ -17,7 +17,6 @@ const (
 	batchSize   = 100
 )
 
-// 7311297342:AAEYthpeaxNE1Z0qlf-C6TbwUuYO75WmX9M
 func main() {
 
 	eventsProcessor := telegram.New(
