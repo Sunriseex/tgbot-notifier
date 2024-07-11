@@ -8,7 +8,7 @@ import (
 	"path"
 	"strconv"
 
-	"github.com/sunriseex/tgbot-notifier/lib/e"
+	e "github.com/sunriseex/tgbot-notifier/lib/errors/err"
 )
 
 type Client struct {
@@ -22,8 +22,8 @@ const (
 	SendMessagesMethod = "sendMessages"
 )
 
-func New(host, token string) Client {
-	return Client{
+func New(host, token string) *Client {
+	return &Client{
 		host:     host,
 		basePath: newBasePath(token),
 		Client:   http.Client{},

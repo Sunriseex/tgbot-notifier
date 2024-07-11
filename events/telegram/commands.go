@@ -6,7 +6,7 @@ import (
 	"net/url"
 	"strings"
 
-	"github.com/sunriseex/tgbot-notifier/lib/e"
+	e "github.com/sunriseex/tgbot-notifier/lib/errors/err"
 	"github.com/sunriseex/tgbot-notifier/lib/storage"
 )
 

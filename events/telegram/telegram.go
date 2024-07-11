@@ -5,7 +5,7 @@ import (
 
 	"github.com/sunriseex/tgbot-notifier/events"
 	"github.com/sunriseex/tgbot-notifier/events/telegram"
-	"github.com/sunriseex/tgbot-notifier/lib/e"
+	e "github.com/sunriseex/tgbot-notifier/lib/errors/err"
 	"github.com/sunriseex/tgbot-notifier/lib/storage"
 )
 
@@ -103,7 +103,7 @@ func fetchType(upd telegram.Update) string {
 
 }
 
-func fetchText(upd tg.Update) events.Type {
+func fetchText(upd telegram.Update) events.Type {
 	if upd.Message == nil {
 		return events.Unknown
 	}

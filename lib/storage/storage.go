@@ -6,7 +6,7 @@ import (
 	"fmt"
 	"io"
 
-	"github.com/sunriseex/tgbot-notifier/lib/e"
+	e "github.com/sunriseex/tgbot-notifier/lib/errors/err"
 )
 
 type Storage interface {
