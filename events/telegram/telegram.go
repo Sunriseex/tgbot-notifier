@@ -25,10 +25,9 @@ var ErrUnknownMetaType = errors.New("unknown meta type")
 
 func New(client *tg.Client, storage storage.Storage) *Processor {
 	return &Processor{
-		tg:      nil,
-		storage: nil,
+		tg:      client,
+		storage: storage,
 	}
-
 }
 
 func (p *Processor) Fetch(limit int) ([]events.Event, error) {
