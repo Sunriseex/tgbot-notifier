@@ -8,7 +8,7 @@ import (
 	"path"
 	"strconv"
 
-	"github.com/sunriseex/tgbot-notifier/lib/errors/e"
+	"github.com/sunriseex/tgbot-notifier/lib/e"
 )
 
 type Client struct {
@@ -53,14 +53,16 @@ func (c *Client) Updates(offset, limit int) ([]Update, error) {
 	return res.Result, nil
 }
 
-func (c *Client) SendMessage(chatID int, text string) {
+func (c *Client) SendMessage(chatID int, text string) error {
 	q := url.Values{}
 	q.Add("chat_id", strconv.Itoa(chatID))
 	q.Add("text", text)
 	_, err := c.doReq(SendMessagesMethod, q)
 	if err != nil {
-		return e.Wrap("can't send messages", err)
+		return e.Wrap("can't send message", err)
 	}
+
+	return nil
 }
 
 func (c *Client) doReq(method string, query url.Values) (data []byte, err error) {

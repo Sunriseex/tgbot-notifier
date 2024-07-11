@@ -10,7 +10,7 @@ import (
 	"path/filepath"
 	"time"
 
-	e "github.com/sunriseex/tgbot-notifier/lib/e"
+	"github.com/sunriseex/tgbot-notifier/lib/e"
 )
 
 type Storage struct {
@@ -65,7 +65,7 @@ func (s Storage) Remove(p *storage.Page) error {
 func (s Storage) IsExists(p *storage.Page) (bool, error) {
 	fName, err := fileName(p)
 	if err != nil {
-		return e.Wrap("can't check if file exists", err)
+		return false, e.Wrap("can't check if file exists", err)
 	}
 	path := filepath.Join(s.basePath, p.UserName, fName)
 	switch _, err := os.Stat(path); {

@@ -2,15 +2,15 @@ package telegram
 
 import (
 	"errors"
+	tg "github.com/sunriseex/tgbot-notifier/clients/telegram"
 	"github.com/sunriseex/tgbot-notifier/storage"
 
 	"github.com/sunriseex/tgbot-notifier/events"
-	"github.com/sunriseex/tgbot-notifier/events/telegram"
-	"github.com/sunriseex/tgbot-notifier/lib/errors/e"
+	"github.com/sunriseex/tgbot-notifier/lib/e"
 )
 
 type Processor struct {
-	tg      *telegram.Client
+	tg      *tg.Client
 	offset  int
 	storage storage.Storage
 }
@@ -23,7 +23,7 @@ type Meta struct {
 var ErrUnknownEventType = errors.New("unknown event type")
 var ErrUnknownMetaType = errors.New("unknown meta type")
 
-func New(client *telegram.Client, storage storage.Storage) *Processor {
+func New(client *tg.Client, storage storage.Storage) *Processor {
 	return &Processor{
 		tg:      nil,
 		storage: nil,
@@ -42,7 +42,7 @@ func (p *Processor) Fetch(limit int) ([]events.Event, error) {
 	}
 	//allocate memory for updates
 	res := make([]events.Event, 0, len(updates))
-	for i, u := range updates {
+	for _, u := range updates {
 		res = append(res, event(u))
 	}
 	p.offset = updates[len(updates)-1].ID + 1
@@ -77,7 +77,7 @@ func meta(event events.Event) (Meta, error) {
 	}
 	return res, nil
 }
-func event(upd telegram.Update) events.Event {
+func event(upd tg.Update) events.Event {
 	updType := fetchType(upd)
 
 	res := events.Event{
@@ -95,17 +95,18 @@ func event(upd telegram.Update) events.Event {
 	return res
 }
 
-func fetchType(upd telegram.Update) string {
+func fetchText(upd tg.Update) string {
 	if upd.Message == nil {
 		return ""
 	}
-	return upd.Message.Text
 
+	return upd.Message.Text
 }
 
-func fetchText(upd telegram.Update) events.Type {
+func fetchType(upd tg.Update) events.Type {
 	if upd.Message == nil {
 		return events.Unknown
 	}
+
 	return events.Message
 }

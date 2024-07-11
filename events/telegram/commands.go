@@ -7,7 +7,7 @@ import (
 	"net/url"
 	"strings"
 
-	"github.com/sunriseex/tgbot-notifier/lib/errors/e"
+	"github.com/sunriseex/tgbot-notifier/lib/e"
 )
 
 const (
