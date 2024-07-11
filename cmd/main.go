@@ -3,21 +3,33 @@ package main
 import (
 	"flag"
 	"log"
+
+	tgClient "github.com/sunriseex/tgbot-notifier/clients/telegram"
+	event_consumer "github.com/sunriseex/tgbot-notifier/consumer/event-consumer"
+
+	"github.com/sunriseex/tgbot-notifier/events/telegram"
+	"github.com/sunriseex/tgbot-notifier/lib/storage/files"
 )
 
+const (
+	tgBotHost   = "api.telegram.org"
+	storagePath = "storage"
+	batchSize   = 100
+)
+
+// 7311297342:AAEYthpeaxNE1Z0qlf-C6TbwUuYO75WmX9M
 func main() {
-	t := mustToken()
 
-	//tgClient = telegram,New(token)
-
-	//fetcher = fetcher.New(tgClient)
-
-	//processor = processor.New(tgClient)
-
-	//consumer = consumer.Start(fetcher,processor)
-
+	eventsProcessor := telegram.New(
+		tgClient.New(tgBotHost, mustToken()),
+		files.New(storagePath),
+	)
+	log.Print("Server started")
+	consumer := event_consumer.New(eventsProcessor, eventsProcessor, batchSize)
+	if err := consumer.Start(); err != nil {
+		log.Fatal("service is stopped", err)
+	}
 }
-
 func mustToken() string {
 	token := flag.String(
 		"token",
