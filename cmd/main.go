@@ -8,7 +8,7 @@ import (
 	tgClient "github.com/sunriseex/tgbot-notifier/clients/telegram"
 	event_consumer "github.com/sunriseex/tgbot-notifier/consumer/event-consumer"
 
-	telegram "github.com/sunriseex/tgbot-notifier/events/telegram"
+	"github.com/sunriseex/tgbot-notifier/events/telegram"
 )
 
 const (
@@ -23,11 +23,14 @@ func main() {
 		tgClient.New(tgBotHost, mustToken()),
 		files.New(storagePath),
 	)
+
 	log.Print("Server started")
 	consumer := event_consumer.New(eventsProcessor, eventsProcessor, batchSize)
+
 	if err := consumer.Start(); err != nil {
 		log.Fatal("service is stopped", err)
 	}
+
 }
 func mustToken() string {
 	token := flag.String(
