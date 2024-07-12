@@ -1,13 +1,13 @@
 package telegram
 
 import (
+	"context"
 	"errors"
+	"github.com/sunriseex/tgbot-notifier/lib/e"
 	"github.com/sunriseex/tgbot-notifier/storage"
 	"log"
 	"net/url"
 	"strings"
-
-	"github.com/sunriseex/tgbot-notifier/lib/e"
 )
 
 const (
@@ -49,7 +49,7 @@ func (p *Processor) savePage(chatID int, pageURL string, username string) (err e
 		UserName: username,
 	}
 
-	isExists, err := p.storage.IsExists(page)
+	isExists, err := p.storage.IsExists(context.Background(), page)
 	if err != nil {
 		return err
 	}
@@ -57,7 +57,7 @@ func (p *Processor) savePage(chatID int, pageURL string, username string) (err e
 		return p.tg.SendMessage(chatID, msgAlreadyExists)
 	}
 
-	if err := p.storage.Save(page); err != nil {
+	if err := p.storage.Save(context.Background(), page); err != nil {
 		return err
 	}
 
@@ -71,7 +71,7 @@ func (p *Processor) savePage(chatID int, pageURL string, username string) (err e
 func (p *Processor) sendRandom(chatID int, username string) (err error) {
 	defer func() { err = e.WrapIfErr("can't do command: can't send random", err) }()
 
-	page, err := p.storage.PickRandom(username)
+	page, err := p.storage.PickRandom(context.Background(), username)
 	if err != nil && !errors.Is(err, storage.ErrNoSavedPages) {
 		return err
 	}
@@ -84,7 +84,7 @@ func (p *Processor) sendRandom(chatID int, username string) (err error) {
 		return err
 	}
 
-	return p.storage.Remove(page)
+	return p.storage.Remove(context.Background(), page)
 }
 
 func (p *Processor) sendHelp(chatID int) error {

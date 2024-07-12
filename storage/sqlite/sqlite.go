@@ -4,6 +4,7 @@ import (
 	"context"
 	"database/sql"
 	"fmt"
+	_ "github.com/mattn/go-sqlite3"
 	"github.com/sunriseex/tgbot-notifier/storage"
 )
 
@@ -40,7 +41,7 @@ func (s *Storage) PickRandom(ctx context.Context, userName string) (*storage.Pag
 
 	err := s.db.QueryRowContext(ctx, query, userName).Scan(&url)
 	if err == sql.ErrNoRows {
-		return nil, nil
+		return nil, storage.ErrNoSavedPages
 	}
 
 	if err != nil {

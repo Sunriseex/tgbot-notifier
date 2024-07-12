@@ -1,27 +1,38 @@
 package main
 
 import (
+	"context"
 	"flag"
-	"github.com/sunriseex/tgbot-notifier/storage/files"
+	"github.com/sunriseex/tgbot-notifier/storage/sqlite"
 	"log"
 
 	tgClient "github.com/sunriseex/tgbot-notifier/clients/telegram"
-	event_consumer "github.com/sunriseex/tgbot-notifier/consumer/event-consumer"
+	"github.com/sunriseex/tgbot-notifier/consumer/event-consumer"
 
 	"github.com/sunriseex/tgbot-notifier/events/telegram"
 )
 
 const (
-	tgBotHost   = "api.telegram.org"
-	storagePath = "storage"
-	batchSize   = 100
+	tgBotHost = "api.telegram.org"
+	//storagePath       = "storage"
+	sqliteStoragePath = "storage/sqlite/storage.db"
+	batchSize         = 100
 )
 
 func main() {
+	//s := files.New(storagePath)
+	stor, err := sqlite.New(sqliteStoragePath)
+	if err != nil {
+		log.Fatal("can't connect storage ", err)
+	}
+
+	if err := stor.Init(context.TODO()); err != nil {
+		log.Fatal("can't initialize storage ", err)
+	}
 
 	eventsProcessor := telegram.New(
 		tgClient.New(tgBotHost, mustToken()),
-		files.New(storagePath),
+		stor,
 	)
 
 	log.Print("Server started")
