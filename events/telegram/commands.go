@@ -41,13 +41,14 @@ func (p *Processor) doCmd(text string, chatID int, username string) error {
 	}
 }
 
-func (p *Processor) savePage(chatID int, username string, pageURL string) (err error) {
+func (p *Processor) savePage(chatID int, pageURL string, username string) (err error) {
 	defer func() { err = e.WrapIfErr("can't do command: save page", err) }()
 
 	page := &storage.Page{
 		URL:      pageURL,
 		UserName: username,
 	}
+
 	isExists, err := p.storage.IsExists(page)
 	if err != nil {
 		return err
@@ -55,6 +56,7 @@ func (p *Processor) savePage(chatID int, username string, pageURL string) (err e
 	if isExists {
 		return p.tg.SendMessage(chatID, msgAlreadyExists)
 	}
+
 	if err := p.storage.Save(page); err != nil {
 		return err
 	}
@@ -62,6 +64,7 @@ func (p *Processor) savePage(chatID int, username string, pageURL string) (err e
 	if err := p.tg.SendMessage(chatID, msgSaved); err != nil {
 		return err
 	}
+
 	return nil
 }
 
